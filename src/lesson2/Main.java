@@ -18,18 +18,18 @@ public class Main {
         System.out.println(Arrays.binarySearch(partOneArray, 21));
         Arrays.fill(partOneArray, 1);
         System.out.println(Arrays.toString(partOneArray));
-        System.out.println(System.nanoTime() - startTime);
+        System.out.println((System.nanoTime() - startTime) + "\n");
 
         int[] partTwoArray = Arrays.copyOf(primitivesArray, primitivesArray.length);
         Arrays.sort(partTwoArray);
         System.out.println(Arrays.toString(partTwoArray));
         startTime = System.nanoTime();
         System.out.println("результат линейного поиска: " + linearSearch(partTwoArray, 21));
-        System.out.println("время выполнения: " + (System.nanoTime() - startTime));
+        System.out.println("время выполнения: " + (System.nanoTime() - startTime) + "\n");
 
         startTime = System.nanoTime();
         System.out.println("результат бинарного поиска: " + binarySearch(partTwoArray, 21));
-        System.out.println(System.nanoTime() - startTime);
+        System.out.println("время выполнения: " + (System.nanoTime() - startTime) + "\n");
 
         int[] partThreeArray = new int[400];
         Random random = new Random();
