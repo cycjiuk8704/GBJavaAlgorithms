@@ -12,6 +12,6 @@ public class MyData {
     }
 
     public void printToConsoleMyCharData() {
-        System.out.println(myCharData);
+        System.out.print(myCharData + ", ");
     }
 }
