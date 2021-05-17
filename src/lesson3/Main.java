@@ -41,7 +41,7 @@ public class Main {
 //3.5
         ListIterator<MyData> listIterator = myDataList.listIterator();
         MyData m;
-
+        startTime = System.nanoTime();
         while (listIterator.hasNext()) {
             m = listIterator.next();
             m.printToConsoleMyCharData();
@@ -54,5 +54,6 @@ public class Main {
             m.printToConsoleMyCharData();
         }
         System.out.println();
+        System.out.println("Время выполнения основных методов: " + (System.nanoTime() - startTime) + "\n");
     }
 }
