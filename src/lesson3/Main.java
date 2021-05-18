@@ -22,24 +22,47 @@ public class Main {
         System.out.println("Время выполнения основных методов: " + (System.nanoTime() - startTime) + "\n");
         System.out.println(intList);
 //3.3
-        List<Integer> intLinkedList = new LinkedList<>(intList);
-        System.out.println(intLinkedList);
-        System.out.println(intLinkedList.equals(intList));
-        intLinkedList.add(3, 111);
-        intLinkedList.set(0, 17);
-        intLinkedList.remove(1);
-        System.out.println(intLinkedList);
-        System.out.println((intLinkedList.get(4)) + "\n");
+        SingleLinkedList<Integer> intLinkedList = new SingleLinkedList<>();
+        for (int i = 0; i < intList.toArray().length; i++) {
+            intLinkedList.insert(intList.get(i));
+        }
+        intLinkedList.display();
+        intLinkedList.insert(111);
+        intLinkedList.insert(3);
+        intLinkedList.display();
+        intLinkedList.delete();
+        System.out.println(intLinkedList.find(6));
+        intLinkedList.display();
 //3.4
-        List<MyData> myDataList = new LinkedList<>();
-        myDataList.add(new MyData('t'));
-        myDataList.add(new MyData('g'));
-        myDataList.add(new MyData('5'));
-        myDataList.add(new MyData('!'));
-        myDataList.add(new MyData('k'));
-        myDataList.add(new MyData('1'));
+        DoublyLinkedList<Character> myDataList = new DoublyLinkedList<>();
+        myDataList.insertForward(new MyData('t').getMyCharData());
+        myDataList.insertForward(new MyData('g').getMyCharData());
+        myDataList.insertForward(new MyData('5').getMyCharData());
+        myDataList.insertForward(new MyData('!').getMyCharData());
+        myDataList.insertLast(new MyData('k').getMyCharData());
+        myDataList.insertLast(new MyData('1').getMyCharData());
+        myDataList.insertForward(new MyData('2').getMyCharData());
+        myDataList.insertLast(new MyData('b').getMyCharData());
+        myDataList.display();
+        myDataList.deleteFirst(myDataList.head);
+        myDataList.display();
+        myDataList.insertForward(new MyData('2').getMyCharData());
+        myDataList.display();
+        myDataList.deleteLast(myDataList.head);
+        myDataList.display();
+        System.out.println();
+
 //3.5
-        ListIterator<MyData> listIterator = myDataList.listIterator();
+        List<MyData> myDataLinkedList = new LinkedList<>();
+        myDataLinkedList.add(new MyData('t'));
+        myDataLinkedList.add(new MyData('g'));
+        myDataLinkedList.add(new MyData('5'));
+        myDataLinkedList.add(new MyData('!'));
+        myDataLinkedList.add(new MyData('k'));
+        myDataLinkedList.add(new MyData('1'));
+        myDataLinkedList.add(new MyData('2'));
+        myDataLinkedList.add(new MyData('b'));
+        ListIterator<MyData> listIterator = myDataLinkedList.listIterator();
         MyData m;
         startTime = System.nanoTime();
         while (listIterator.hasNext()) {
@@ -57,3 +80,162 @@ public class Main {
         System.out.println("Время выполнения основных методов: " + (System.nanoTime() - startTime) + "\n");
     }
 }
+
+class Link<T> {
+    private final T link;
+    private Link<T> next;
+
+    public Link(T link) {
+        this.link = link;
+    }
+
+    public Link<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Link<T> next) {
+        this.next = next;
+    }
+
+    public T getValue() {
+        return link;
+    }
+}
+
+class SingleLinkedList<T> {
+    private Link<T> first;
+
+    public SingleLinkedList() {
+        first = null;
+    }
+
+    public boolean isEmpty() {
+        return first == null;
+    }
+
+    public void insert(T link) {
+        Link<T> l = new Link<>(link);
+        l.setNext(first);
+        this.first = l;
+    }
+
+    public Link<T> delete() {
+        Link<T> temp = first;
+        first = first.getNext();
+        return temp;
+    }
+
+    public void display() {
+        Link<T> current = first;
+        while (current != null) {
+            System.out.print(current.getValue() + " ");
+            current = current.getNext();
+        }
+        System.out.println();
+    }
+
+    public T find(T searchNode) {
+        Link<T> findNode = new Link<>(searchNode);
+        Link<T> current = first;
+        while (current != null) {
+            if (current.getValue().equals(findNode.getValue())) {
+                return findNode.getValue();
+            }
+            current = current.getNext();
+        }
+        return null;
+    }
+}
+
+class Node<T> {
+
+    public final T data;
+    public Node<T> next;
+    public Node<T> previous;
+
+    public Node(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public Node<T> getPrevious() {
+        return previous;
+    }
+
+    public void setNext(Node<T> next) {
+        this.next = next;
+    }
+
+    public void setPrevious(Node<T> previous) {
+        this.previous = previous;
+    }
+
+    public T getValue() {
+        return data;
+    }
+}
+
+class DoublyLinkedList<T> {
+    Node<T> head;
+
+    public void insertForward(T data) {
+        Node<T> elementToInsert = new Node<>(data);
+        elementToInsert.next = head;
+        elementToInsert.previous = null;
+        if (head != null) {
+            head.previous = elementToInsert;
+        }
+        head = elementToInsert;
+    }
+
+    public void insertLast(T data) {
+        Node<T> elementToInsert = new Node<>(data);
+        Node<T> last = head;
+        elementToInsert.next = null;
+
+        if (head == null) {
+            elementToInsert.previous = null;
+            head = elementToInsert;
+            return;
+        }
+        while (last.next != null) {
+            last = last.next;
+        }
+        last.next = elementToInsert;
+        elementToInsert.previous = last;
+    }
+
+    public void deleteFirst(Node<T> elementToBeDeleted) {
+        if (head == null || elementToBeDeleted == null) {
+            return;
+        }
+        head = elementToBeDeleted.next;
+    }
+
+    public void deleteLast(Node<T> elementToBeDeleted) {
+        if (head == null || elementToBeDeleted == null) {
+            return;
+        }
+        Node<T> last = head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last = last.previous;
+        last.next = null;
+    }
+
+    public void display() {
+        Node<T> current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+}
+
+
