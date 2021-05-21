@@ -41,7 +41,7 @@ public class MyDequeue<T> {
     }
 
     public void clear() {
-        dequeue.removeAll(dequeue);
+        dequeue.clear();
     }
 
     public int size() {
