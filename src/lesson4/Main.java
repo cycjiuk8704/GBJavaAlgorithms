@@ -120,6 +120,52 @@ public class Main {
         System.out.println("размер приоритетной очереди: " + priorQueueObj.size());
 
         System.out.println("Время выполнения методов приоритетной очереди: " + (System.nanoTime() - startTime));
-    }
 //4.5
+        startTime = System.nanoTime();
+        MyLinkedStack<MyData> linkedStackObj = new MyLinkedStack<>();
+        linkedStackObj.push(new MyData(1, 2));
+        linkedStackObj.push(new MyData(5, 12));
+        linkedStackObj.push(new MyData(21, 5));
+        linkedStackObj.push(new MyData(34, 52));
+        linkedStackObj.push(new MyData(8, 9));
+        linkedStackObj.push(new MyData(11, 12));
+        linkedStackObj.push(new MyData(41, 21));
+
+        linkedStackObj.peek().printToConsole();
+
+        System.out.println("размер стека на основе связного списка: " + linkedStackObj.size());
+
+        while (!linkedStackObj.isEmpty()) {
+            linkedStackObj.pop().printToConsole();
+        }
+
+        System.out.println("размер стека на основе связного списка: " + linkedStackObj.size());
+
+        System.out.println("Время выполнения методов стека на основе связного списка: " + (System.nanoTime() - startTime));
+
+
+        startTime = System.nanoTime();
+        MyLinkedQueue<MyData> LinkedQueueObj = new MyLinkedQueue<>();
+        LinkedQueueObj.insert(new MyData(1, 2));
+        LinkedQueueObj.insert(new MyData(5, 12));
+        LinkedQueueObj.insert(new MyData(21, 5));
+        LinkedQueueObj.insert(new MyData(34, 52));
+        LinkedQueueObj.insert(new MyData(8, 9));
+        LinkedQueueObj.insert(new MyData(11, 12));
+        LinkedQueueObj.insert(new MyData(41, 21));
+
+        LinkedQueueObj.peek().printToConsole();
+
+        System.out.println("размер очереди на основе связного списка: " + LinkedQueueObj.size());
+
+        while (!LinkedQueueObj.isEmpty()) {
+            LinkedQueueObj.remove().printToConsole();
+        }
+
+        System.out.println("размер очереди на основе связного списка: " + LinkedQueueObj.size());
+
+        System.out.println("Время выполнения методов очереди на основе связного списка: " + (System.nanoTime() - startTime));
+
+
+    }
 }
